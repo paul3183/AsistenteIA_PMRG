@@ -6,8 +6,34 @@
     <link rel="stylesheet" href="../static/css/output.css">
     <title>AsistenteIA by Paul Martin Ruiz Guardia</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            event.preventDefault();
+            var message = $('#message').val();
+            $.ajax({
+                url: '/ask',
+                type: 'POST',
+                contentType: 'application/json', 
+                data: JSON.stringify({message: message}),
+                datatype: 'json',
+                succes: function(data) {
+                    $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
+                    $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                }
+            });
+            $('#message').val('');
+        });
+    }); 
+    </script>
 </head>
 <body class="bg-gray-800 min-h-screen flex flex-col items-center justify-center">
-    
+    <div class="w-full max-w-2xl p-4">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+            <input id="message" type="text" placeholder="Escribe algo..." required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 </body>
 </html>
