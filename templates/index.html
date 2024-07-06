@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/output.css">
-    <title>AsistenteIA by Paul Martin Ruiz Guardia</title>
+    <title>Chatbot de Paul Martin Ruiz Guardia</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -14,10 +14,10 @@
             $.ajax({
                 url: '/ask',
                 type: 'POST',
-                contentType: 'application/json', 
+                contentType: 'application/json',
                 data: JSON.stringify({message: message}),
-                datatype: 'json',
-                succes: function(data) {
+                dataType: 'json',
+                success: function(data) {
                     $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
                     $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
                     $('#chat').scrollTop($('#chat')[0].scrollHeight);
@@ -25,15 +25,30 @@
             });
             $('#message').val('');
         });
-    }); 
+    });
     </script>
 </head>
 <body class="bg-gray-800 min-h-screen flex flex-col items-center justify-center">
     <div class="w-full max-w-2xl p-4">
+        <h1 class="text-center text-3xl text-white mb-4">Asistente de Ciencia de Datos</h1>
+        <div id="chat" class="mb-4 bg-white rounded-lg p-4 overflow-auto" style="height: 500px;">
+        </div>
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8">
-            <input id="message" type="text" placeholder="Escribe algo..." required>
-            <button type="submit">Enviar</button>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
+                    Tu mensaje
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" type="text" placeholder="Escribe algo..." required>
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Enviar
+                </button>
+            </div>
         </form>
     </div>
+    <footer class="text-white text-center w-full py-4 bg-gray-900 mt-4">
+        By Paul Martin Ruiz Guardia - Ciencia de Datos y Big Data en TECSUP, Lima, Perú
+    </footer>
 </body>
 </html>
