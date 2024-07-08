@@ -21,13 +21,17 @@ def index():
 def ask():
     user_message = request.json['message'].lower()
     
-    personal_questions = ["¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?", "quien eres?", "quien eres", "que eres?", "que eres"]
-    personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
+    personal_questions = ["hola", "¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?", "quien eres?", "quien eres", "que eres?", "que eres"]
+    personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil, en qué te puedo ayudar?"
     
-# Respuestas personalizadas para preguntas sobre Paul Martin Ruiz Guardia
+ # Respuestas personalizadas para preguntas sobre Paul Martin Ruiz Guardia
     paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia"]
-    paul_response = "Paul Martin Ruiz Guardia es un Data Engineer con amplia formación en desarrollo web y manejo de APIs. Él me entrenó para ser su asistente personal, demostrando su dominio en el manejo de la inteligencia artificial."
-
+    paul_response = ("Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, "
+                     "además de ser un experto en Python, Pyspark, y SQL. Especializado en soluciones cloud y tecnologías frontend como ReactJs y Tailwind-Css. "
+                     "Paul ha dirigido proyectos innovadores en la gestión de turnos para servicios educativos y ha desarrollado su habilidad en la ciencia de datos y Big Data a través de TECSUP. "
+                     "Su experiencia incluye también la gestión de análisis de datos con Polars y Python, así como la educación en plataformas en línea como Udemy. "
+                     "Paul es conocido por su capacidad para integrar tecnología avanzada en soluciones prácticas que mejoran los procesos de negocio y educativos.")
+    
     if any(question in user_message for question in personal_questions):
         return jsonify({'response': personal_response})
     elif any(question in user_message for question in paul_questions):
