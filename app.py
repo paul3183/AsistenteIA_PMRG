@@ -19,19 +19,7 @@ def index():
 
 @app.route('/ask', methods=['POST'])
 def ask():
-    user_message = request.json['message'].lower()
-
-    # Definir preguntas y respuestas personalizadas
-    personal_questions = ["hola", "¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
-    personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
-
-    paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia"]
-    paul_response = "Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, ..."
-
-    if any(question in user_message for question in personal_questions):
-        return jsonify({'response': personal_response})
-    elif any(question in user_message for question in paul_questions):
-        return jsonify({'response': paul_response})
+    user_message = request.json['message']
 
     headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {OPENAI_API_KEY}'}
     data = {'model': 'gpt-3.5-turbo', 'messages': [{'role': 'user', 'content': user_message}]}
@@ -46,12 +34,9 @@ def ask():
             else:
                 return jsonify({'response': 'No pude encontrar una respuesta a tu pregunta.'})
         else:
-            return jsonify({'error': 'Error al obtener respuesta de OpenAI. Código de estado: ' + str(response.status_code)})
+            return jsonify({'error': f'Error al obtener respuesta de OpenAI. Código de estado: {response.status_code}'})
     except Exception as e:
-        return jsonify({'error': 'Error en la solicitud: ' + str(e)})
-
-    # Manejo de respuestas no clasificadas y problemas inesperados
-    return jsonify({'response': 'Lo siento, no tengo una respuesta para eso ahora mismo.'})
+        return jsonify({'error': f'Error en la solicitud: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)
