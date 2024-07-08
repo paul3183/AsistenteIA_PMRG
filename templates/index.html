@@ -10,7 +10,11 @@
     $(document).ready(function() {
         $('form').submit(function(event) {
             event.preventDefault();
-            var message = $('#message').val();
+            var message = $('#message').val().trim();
+            if (message === '') {
+                alert('Por favor, escribe un mensaje.');
+                return; // Detiene la función si el mensaje está vacío
+            }
             $.ajax({
                 url: '/ask',
                 type: 'POST',
@@ -18,9 +22,16 @@
                 data: JSON.stringify({message: message}),
                 dataType: 'json',
                 success: function(data) {
-                    $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
-                    $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
+                    if (data.response) {
+                        $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
+                        $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
+                    } else {
+                        $('#chat').append('<div class="text-white p-2 bg-red-600 rounded">Error: No se pudo obtener una respuesta válida.</div>');
+                    }
                     $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                },
+                error: function(xhr, status, error) {
+                    $('#chat').append('<div class="text-white p-2 bg-red-600 rounded">Error en la conexión con el servidor.</div>');
                 }
             });
             $('#message').val('');
