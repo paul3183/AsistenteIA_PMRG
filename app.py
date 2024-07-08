@@ -37,3 +37,6 @@ def ask():
             return jsonify({'error': 'Error al obtener respuesta de OpenAI . Código de estado: ' + str(response.status_code)})
     except Exception as e:
         return jsonify({'error': 'Error en la solicitud: ' + str(e)})    
+
+if __name__ == '__main__' : 
+    app.run(debug = True)
