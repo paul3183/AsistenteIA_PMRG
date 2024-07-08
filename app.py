@@ -21,7 +21,6 @@ def index():
 def ask():
     user_message = request.json['message'].lower()
 
-    # Definir preguntas y respuestas personalizadas
     personal_questions = ["hola", "¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
     personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
 
@@ -40,13 +39,11 @@ def ask():
         response = requests.post(OPENAI_API_URL, headers=headers, json=data)
         if response.status_code == 200:
             response_data = response.json()
-            # Asegurarse de que la respuesta tiene el contenido esperado
             if 'choices' in response_data and len(response_data['choices']) > 0 and 'message' in response_data['choices'][0]:
                 chat_response = response_data['choices'][0]['message']['content'].strip()
                 return jsonify({'response': chat_response})
             else:
-                # Manejar casos donde no se recibe la respuesta esperada
-                return jsonify({'response': 'Lo siento, no pude procesar tu solicitud correctamente.'})
+                return jsonify({'response': 'No pude encontrar una respuesta a tu pregunta.'})
         else:
             return jsonify({'error': f'Error al obtener respuesta de OpenAI. Código de estado: {response.status_code}'})
     except Exception as e:
