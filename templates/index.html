@@ -10,11 +10,7 @@
     $(document).ready(function() {
         $('form').submit(function(event) {
             event.preventDefault();
-            var message = $('#message').val().trim();
-            if (message === '') {
-                alert('Por favor, escribe un mensaje.');
-                return; // Detiene la función si el mensaje está vacío
-            }
+            var message = $('#message').val();
             $.ajax({
                 url: '/ask',
                 type: 'POST',
@@ -22,16 +18,9 @@
                 data: JSON.stringify({message: message}),
                 dataType: 'json',
                 success: function(data) {
-                    if (data.response) {
-                        $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
-                        $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
-                    } else {
-                        $('#chat').append('<div class="text-white p-2 bg-red-600 rounded">Error: No se pudo obtener una respuesta válida.</div>');
-                    }
+                    $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
+                    $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
                     $('#chat').scrollTop($('#chat')[0].scrollHeight);
-                },
-                error: function(xhr, status, error) {
-                    $('#chat').append('<div class="text-white p-2 bg-red-600 rounded">Error en la conexión con el servidor.</div>');
                 }
             });
             $('#message').val('');
@@ -59,7 +48,7 @@
         </form>
     </div>
     <footer class="text-white text-center w-full py-4 bg-gray-900 mt-4">
-        By Paul Martin Ruiz Guardia - Lima, Perú
+        By Paul Martin Ruiz Guardia - Ciencia de Datos y Big Data en TECSUP, Lima, Perú
     </footer>
 </body>
 </html>
