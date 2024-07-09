@@ -21,34 +21,42 @@ def index():
 @app.route('/ask', methods=['POST'])
 def ask():
     user_message = request.json['message'].lower()
-
-    personal_questions = ["hola", "¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
+    
+    # Respuestas personalizadas para preguntas específicas
+    personal_questions = ["¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
     personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
 
-    paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia"]
-    paul_response = ("Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, ...")
+    # Respuestas personalizadas para preguntas sobre Paul Martin Ruiz Guardia
+    paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia", "quien te ha entrenado", "¿quién te ha entrenado?", "quién te ha entrenado?", "quien te ha entrenado?", "¿quien te ha entrenado?"]
+    paul_response = ("Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, "
+                     "además de ser un experto en Python, Pyspark, y SQL. Especializado en soluciones cloud y tecnologías frontend como ReactJs y Tailwind-Css. "
+                     "Paul ha dirigido proyectos innovadores en la gestión de turnos para servicios educativos y ha desarrollado su habilidad en la ciencia de datos y Big Data a través de TECSUP. "
+                     "Su experiencia incluye también la gestión de análisis de datos con Polars y Python, así como la educación en plataformas en línea como Udemy. "
+                     "Paul es conocido por su capacidad para integrar tecnología avanzada en soluciones prácticas que mejoran los procesos de negocio y educativos.")
 
     if any(question in user_message for question in personal_questions):
         return jsonify({'response': personal_response})
     elif any(question in user_message for question in paul_questions):
         return jsonify({'response': paul_response})
 
-    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {OPENAI_API_KEY}'}
-    data = {'model': 'gpt-3.5-turbo', 'messages': [{'role': 'user', 'content': user_message}]}
-
+    headers = {
+        'Content-Type': 'application/json', 
+        'Authorization': f'Bearer {OPENAI_API_KEY}'
+    }
+    data = {
+        'model': 'gpt-3.5-turbo', 
+        'messages': [{'role': 'user', 'content': user_message}]
+    }
+    
     try:
         response = requests.post(OPENAI_API_URL, headers=headers, json=data)
         if response.status_code == 200:
-            response_data = response.json()
-            if 'choices' in response_data and len(response_data['choices']) > 0 and 'message' in response_data['choices'][0]:
-                chat_response = response_data['choices'][0]['message']['content'].strip()
-                return jsonify({'response': chat_response})
-            else:
-                return jsonify({'response': 'No pude encontrar una respuesta a tu pregunta.'})
+            chat_response = response.json()['choices'][0]['message']['content'].strip()
+            return jsonify({'response': chat_response})
         else:
-            return jsonify({'error': f'Error al obtener respuesta de OpenAI. Código de estado: {response.status_code}'})
+            return jsonify({'error': 'Error al obtener respuesta de OpenAI. Código de estado: ' + str(response.status_code)})
     except Exception as e:
-        return jsonify({'error': f'Error en la solicitud: {str(e)}'})
+        return jsonify({'error': 'Error en la solicitud: ' + str(e)})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__' : 
+    app.run(debug = True)
