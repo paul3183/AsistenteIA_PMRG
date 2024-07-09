@@ -3,24 +3,24 @@ import requests
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
 
-#Para cargar las variables de entorno desde el archivo .env:
+
 load_dotenv()
 
-#configuración de la clave API y el endpoint de la API de OpenAI
+
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions'
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
+
 
 @app.route('/')
 def index():
-    #renderiza el template para el formulario del chat:
     return render_template('index.html')
+
 
 @app.route('/ask', methods=['POST'])
 def ask():
     user_message = request.json['message']
-
     headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {OPENAI_API_KEY}'}
     data = {'model': 'gpt-3.5-turbo', 'messages': [{'role': 'user', 'content': user_message}]}
 
