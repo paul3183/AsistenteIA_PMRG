@@ -23,11 +23,11 @@ def ask():
     user_message = request.json['message'].lower()
     
     # Respuestas personalizadas para preguntas específicas
-    personal_questions = ["¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
+    personal_questions = ["¿quién eres?", "quién eres?", "quién eres", "¿quien eres?", "quien eres?", "quien eres", "¿qué eres?", "qué eres?", "qué eres", "¿que eres?", "que eres?", "que eres", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
     personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
 
     # Respuestas personalizadas para preguntas sobre Paul Martin Ruiz Guardia
-    paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia", "quien te ha entrenado", "¿quién te ha entrenado?", "quién te ha entrenado?", "quien te ha entrenado?", "¿quien te ha entrenado?"]
+    paul_questions = ["dime sobre paul ruiz", "quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia", "quien te ha entrenado", "¿quién te ha entrenado?", "quién te ha entrenado?", "quien te ha entrenado?", "¿quien te ha entrenado?"]
     paul_response = ("Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, "
                      "además de ser un experto en Python, Pyspark, y SQL. Especializado en soluciones cloud y tecnologías frontend como ReactJs y Tailwind-Css. "
                      "Paul ha dirigido proyectos innovadores en la gestión de turnos para servicios educativos y ha desarrollado su habilidad en la ciencia de datos y Big Data a través de TECSUP. "
