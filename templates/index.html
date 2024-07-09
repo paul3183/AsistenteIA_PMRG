@@ -18,10 +18,16 @@
                 data: JSON.stringify({message: message}),
                 dataType: 'json',
                 success: function(data) {
-                    $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
-                    $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
-                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-                }
+    console.log(data);  // Añade esto para depurar
+    if (data.error) {
+        alert('Error: ' + data.error);
+    } else {
+        $('#chat').append('<div class="text-white p-2 mt-2 bg-blue-600 rounded">' + 'Tú: ' + message + '</div>');
+        $('#chat').append('<div class="text-white p-2 bg-green-600 rounded">' + 'IA: ' + data.response + '</div>');
+        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+    }
+}
+
             });
             $('#message').val('');
         });
