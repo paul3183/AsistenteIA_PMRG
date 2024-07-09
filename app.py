@@ -23,7 +23,7 @@ def ask():
     user_message = request.json['message'].lower()
     
     # Respuestas personalizadas para preguntas específicas
-    personal_questions = ["¿quién eres?", "quién eres?", "quién eres", "¿quien eres?", "quien eres?", "quien eres", "¿qué eres?", "qué eres?", "qué eres", "¿que eres?", "que eres?", "que eres", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
+    personal_questions = ["hola","¿quién eres?", "quién eres?", "quién eres", "¿quien eres?", "quien eres?", "quien eres", "¿qué eres?", "qué eres?", "qué eres", "¿que eres?", "que eres?", "que eres", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
     personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
 
     # Respuestas personalizadas para preguntas sobre Paul Martin Ruiz Guardia
