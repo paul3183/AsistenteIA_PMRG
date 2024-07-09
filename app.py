@@ -20,7 +20,19 @@ def index():
 
 @app.route('/ask', methods=['POST'])
 def ask():
-    user_message = request.json['message']
+    user_message = request.json['message'].lower()
+
+    personal_questions = ["hola", "¿quién eres?", "¿qué eres?", "¿qué haces?", "¿a qué te dedicas?", "¿qué resuelves?"]
+    personal_response = "Hola, soy un modelo de IA entrenado por Paul Martin Ruiz Guardia para asistir en la resolución de dudas y proporcionar información útil."
+
+    paul_questions = ["quien es paul martin ruiz guardia", "quien es paul ruiz", "quien es paul martin ruiz", "quien es ruiz guardia"]
+    paul_response = ("Paul Martin Ruiz Guardia es un Data Engineer con una formación profunda en desarrollo web y manejo de APIs, ...")
+
+    if any(question in user_message for question in personal_questions):
+        return jsonify({'response': personal_response})
+    elif any(question in user_message for question in paul_questions):
+        return jsonify({'response': paul_response})
+
     headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {OPENAI_API_KEY}'}
     data = {'model': 'gpt-3.5-turbo', 'messages': [{'role': 'user', 'content': user_message}]}
 
