@@ -1,5 +1,5 @@
 {
-    "version": 2,
+
     "builds": [
       {
         "src": "app.py",
@@ -11,9 +11,6 @@
         "src": "/(.*)",
         "dest": "/app.py"
       }
-    ],
-    "env": {
-      "OPENAI_API_KEY": "@openai_api_key"
-    }
+    ]
+    
   }
-  
